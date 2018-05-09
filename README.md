@@ -1,6 +1,7 @@
 # webpack4
 支持多页面打包的webpack4  
 * git clone https://github.com/yuhaiyang1/webpack4.git  
+* cd 到当前目录然后 
 * npm i   
 * 然后在 modulesCfg.js 里 配置  
 * targetServer: 要访问的host或者ip 主要起代理作用 处理跨域  
