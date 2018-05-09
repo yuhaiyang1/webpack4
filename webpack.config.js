@@ -36,12 +36,13 @@ const webpackConfig = {
      * 现在只需要 require('components')
      * 但是需要注意不要与node_modules中的模块名称重复
      */
+	  // z这里放一些公用组件
     alias: {
-      components: path.dirname(`${__dirname}/src/components/index.js`),
-      utils: path.dirname(`${__dirname}/src/utils/index.js`),
-      commonStyle: path.dirname(`${__dirname}/src/utils/common.style.less`),
-      BussinessCom: path.dirname(`${__dirname}/src/components/BussinessCom/index.js`),
-      PureCom: path.dirname(`${__dirname}/src/components/PureCom/index.js`)
+//       components: path.dirname(`${__dirname}/src/components/index.js`),
+//       utils: path.dirname(`${__dirname}/src/utils/index.js`),
+//       commonStyle: path.dirname(`${__dirname}/src/utils/common.style.less`),
+//       BussinessCom: path.dirname(`${__dirname}/src/components/BussinessCom/index.js`),
+//       PureCom: path.dirname(`${__dirname}/src/components/PureCom/index.js`)
     }
   },
   mode: __NODE_ENV__ === 'develop' ? 'development' : 'production',
