@@ -6,6 +6,11 @@ const chalk = require('chalk')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const WebpackMd5Hash = require('webpack-md5-hash')// md5 待做
+// const HashedModuleIdsPlugin = require('./HashedModuleIdsPlugin')// md5 待做
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+var HappyPack = require('happypack');
 const traverseFile = require('./tools').traverseFile
 const srcDir = './src/view'
 let modulesCfg
@@ -61,25 +66,19 @@ const webpackConfig = {
     rules: [
       {
         test: /global\.css$/,
-        use: ['css-loader?modules&localIdentName=[local]-[hash:base64:5]']
-      },
-      {
-        test: /^((?!global).)*\.css$/,
         use: ['css-loader']
       },
       {
+        test: /^((?!global).)*\.css$/,
+        use: [{loader: 'css-loader', options: { modules: true }}]
+      },
+      {
         test: /global\.less$/,
-        use: ['css-loader?modules&localIdentName=[name]__[local]-[hash:base64:5]!autoprefixer-loader!less-loader'],
+        use: ['style-loader', 'css-loader', 'less-loader']
       },
       {
         test: /^((?!global).)*\.less$/,
-        use: [{
-          loader: 'style-loader' // creates style nodes from JS strings
-        }, {
-          loader: 'css-loader' // translates CSS into CommonJS
-        }, {
-          loader: 'less-loader' // compiles Less to CSS
-        }]
+        use: ['style-loader', {loader: 'css-loader', options: { modules: true }}, 'less-loader']
       },
       {
         test: /\.(html)$/,
@@ -89,7 +88,7 @@ const webpackConfig = {
       },
       {
         test: /\.(js|jsx)$/,
-        use: ['babel-loader'],
+        use: ['happypack/loader?id=js'],
         // exclude: /node_modules/
         include: path.join(__dirname, 'src')
       },
@@ -105,11 +104,21 @@ const webpackConfig = {
     ]
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(), //调用webpack的热更新插件
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: __NODE_ENV__ === 'develop' ? JSON.stringify('develop') : JSON.stringify('prod')
       }
     }),
+    new ProgressBarPlugin({
+      format: '  build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
+      clear: false,
+      width: 60
+    }),
+    new HappyPack({
+      id: 'js',
+      loaders: [ 'babel-loader' ]
+    })
   ]
 }
 
