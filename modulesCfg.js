@@ -5,7 +5,7 @@ module.exports = {
     targetServer: 'http://xxxxx:8080/',
     //开发环境的入口文件
     dev: [
-      'test'
+      'rxjs'
     ],
   // 打包发布的入口文件。将开发环境和发布环境分开不会导致覆盖别人的代码
   // modulesCfg.prod 内仅仅配置自己现在开发的入口文件
