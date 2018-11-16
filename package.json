@@ -1,13 +1,13 @@
 {
-  "name": "erp",
+  "name": "{{name}}",
   "version": "1.0.0",
-  "description": "多页面打包",
+  "description": "{{description}}",
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=develop node app.js --colors ",
     "build": "rm -r -f dist && cross-env NODE_ENV=prod webpack -p --colors"
   },
-  "author": "yhy",
+  "author": "{{author}}",
   "license": "ISC",
   "dependencies": {
     "antd": "2.7.2",
